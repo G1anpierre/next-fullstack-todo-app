@@ -13,12 +13,21 @@ datasource db {
 
 
 // schema.prisma
+enum Status {
+  COMPLETE
+  INPROGRESS
+  PENDING
+}
+
 
 model Todo {
   id        String     @default(cuid()) @id
   title     String
   content   String?
-  completed Boolean @default(false)
+  status Status @default(PENDING)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  dueDate   DateTime?
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
 }
