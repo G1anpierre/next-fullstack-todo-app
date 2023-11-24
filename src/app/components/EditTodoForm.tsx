@@ -8,7 +8,7 @@ export const EditTodoForm = ({
   updateTodoWithId,
 }: {
   singleTodo: SingleTodoType
-  updateTodoWithId: () => State
+  updateTodoWithId: (prevState: any, formData: FormData) => Promise<State>
 }) => {
   const initialState = {errors: {}, message: ''}
   const [state, dispatch] = useFormState(updateTodoWithId, initialState)

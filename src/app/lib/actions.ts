@@ -1,6 +1,5 @@
 'use server'
 import {prisma} from './database-prisma'
-import {State} from './types'
 import {z} from 'zod'
 import {revalidatePath} from 'next/cache'
 
