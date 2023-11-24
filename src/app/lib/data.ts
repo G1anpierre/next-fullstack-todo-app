@@ -18,6 +18,7 @@ export const SingleTodoSchema = z.object({
   title: z.string(),
   content: z.string().nullable(),
   status: z.string(),
+  todoPosibleStatus: z.array(z.string()),
   createdAt: z.date(),
   updatedAt: z.date(),
   dueDate: z.date().nullable().optional(),

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import {useFormState} from 'react-dom'
-import {SingleTodoType, State} from '../lib/types'
+import {SingleTodoType} from '../lib/types'
 
 export const EditTodoForm = ({
   singleTodo,

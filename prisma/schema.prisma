@@ -25,6 +25,7 @@ model Todo {
   title     String
   content   String?
   status Status @default(PENDING)
+  todoPosibleStatus Status[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   dueDate   DateTime?

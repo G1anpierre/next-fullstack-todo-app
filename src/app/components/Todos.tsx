@@ -2,14 +2,8 @@ import React from 'react'
 import {ProjectType, StatusesType} from '../lib/types'
 import Link from 'next/link'
 import {MenuTodo} from './MenuTodo'
-import {classNames} from '../lib/utils'
+import {classNames, statuses} from '../lib/utils'
 import {getTodos} from '../lib/data'
-
-const statuses: StatusesType = {
-  COMPLETE: 'text-green-700 bg-green-50 ring-green-600/20',
-  'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  PENDING: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
-}
 
 export const Todos = async () => {
   const todos = await getTodos()
