@@ -4,6 +4,7 @@ import {useFormState} from 'react-dom'
 import {SingleTodoType} from '../lib/types'
 import {StatusDropdown} from './StatusDropdown'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 export const EditTodoForm = ({
   singleTodo,
@@ -13,7 +14,18 @@ export const EditTodoForm = ({
   updateTodoWithId: (prevState: any, formData: FormData) => Promise<any>
 }) => {
   const initialState = {errors: {}, message: ''}
-  const [state, dispatch] = useFormState(updateTodoWithId, initialState)
+
+  const clientAction = async (prevState: any, payLoad: FormData) => {
+    const result = await updateTodoWithId(prevState, payLoad)
+    if (result.success) {
+      toast.success(result.message)
+    }else {
+      toast.error(result.message)
+    }
+    return result
+  }
+
+  const [state, dispatch] = useFormState(clientAction, initialState)
   return (
     <>
       <form action={dispatch} className="relative">

@@ -40,7 +40,6 @@ export async function createTodo(prevState: State, formData: FormData) {
       errors: {},
     }
   } catch (error: any) {
-    console.log('error :', error)
     return {
       errors: {},
       message: 'Database Error: Failed to Create Todo',
@@ -56,14 +55,19 @@ export const deleteTodo = async (id: string) => {
         id: id,
       },
     })
-  } catch (error) {
-    console.log('error :', error)
+    revalidatePath('/')
     return {
-      errors: error,
+      errors: {},
+      message: 'Todo Deleted',
+      success: true,
+    }
+  } catch (error: any) {
+    return {
+      errors: {error: error.message},
       message: 'Database Error: Failed to Delete Todo',
+      success: false,
     }
   }
-  revalidatePath('/')
 }
 
 export const updateTodo = async (
@@ -83,6 +87,7 @@ export const updateTodo = async (
     return {
       errors: validatedFormData.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Update Todo',
+      success: false,
     }
   }
 
@@ -97,11 +102,18 @@ export const updateTodo = async (
         status: validatedFormData.data.status,
       },
     })
-  } catch (error) {
+    revalidatePath(`/edit/${id}`)
+
     return {
-      errors: error,
+      errors: {},
+      message: 'Todo Updated',
+      success: true,
+    }
+  } catch (error: any) {
+    return {
+      errors: {error: error.message},
       message: 'Database Error: Failed to Update Todo',
+      success: false,
     }
   }
-  revalidatePath('/')
 }

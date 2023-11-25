@@ -8,6 +8,7 @@ import React from 'react'
 const EditPage = async ({params}: {params: {id: string}}) => {
   const singleTodo = await getTodo(params.id)
   const updateTodoWithId = updateTodo.bind(null, params.id)
+
   return (
     <div>
       <Breadcrumbs
