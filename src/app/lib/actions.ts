@@ -2,16 +2,15 @@
 import {prisma} from './database-prisma'
 import {z} from 'zod'
 import {revalidatePath} from 'next/cache'
+import {State} from './types'
 
 const rawFormDataSchema = z.object({
-  title: z.string({
-    invalid_type_error: 'Title must be a string',
-  }),
+  title: z.string().min(3, {message: 'Must be 5 or more characters long'}),
   content: z.string().nullable().optional(),
   status: z.enum(['COMPLETE', 'IN_PROGRESS', 'PLANNED']).optional(),
 })
 
-export async function createTodo(prevState: any, formData: FormData) {
+export async function createTodo(prevState: State, formData: FormData) {
   const rawFormData = {
     title: formData.get('title'),
     content: formData.get('content'),
@@ -23,6 +22,7 @@ export async function createTodo(prevState: any, formData: FormData) {
     return {
       errors: validatedFormData.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Create Todo',
+      success: false,
     }
   }
 
@@ -33,14 +33,20 @@ export async function createTodo(prevState: any, formData: FormData) {
         content: validatedFormData.data.content,
       },
     })
-  } catch (error) {
+    revalidatePath('/')
+    return {
+      success: true,
+      message: 'Todo Created',
+      errors: {},
+    }
+  } catch (error: any) {
     console.log('error :', error)
     return {
-      errors: error,
+      errors: {},
       message: 'Database Error: Failed to Create Todo',
+      success: false,
     }
   }
-  revalidatePath('/')
 }
 
 export const deleteTodo = async (id: string) => {

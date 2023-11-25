@@ -18,9 +18,10 @@ export type ProjectType = {
 
 export type State = {
   errors: {
-    title: string[]
+    title?: string[]
   }
   message: string
+  success: boolean
 }
 
 export type SingleTodoType = z.infer<typeof SingleTodoSchema>
