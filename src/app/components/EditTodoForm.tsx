@@ -2,6 +2,8 @@
 import React from 'react'
 import {useFormState} from 'react-dom'
 import {SingleTodoType} from '../lib/types'
+import {StatusDropdown} from './StatusDropdown'
+import Link from 'next/link'
 
 export const EditTodoForm = ({
   singleTodo,
@@ -54,6 +56,10 @@ export const EditTodoForm = ({
         </div>
         <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
           <div className="flex">
+            <StatusDropdown
+              todoPosibleStatus={singleTodo.todoPosibleStatus}
+              defaultValue={singleTodo.status}
+            />
             {/* <button
         type="button"
         className="group -my-2 -ml-2 inline-flex items-center rounded-full px-3 py-2 text-left text-gray-400"
@@ -67,7 +73,13 @@ export const EditTodoForm = ({
         </span>
       </button> */}
           </div>
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex gap-2">
+            <Link
+              href="/"
+              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Go To-Do&apos;s
+            </Link>
             <button
               type="submit"
               className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

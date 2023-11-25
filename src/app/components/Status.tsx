@@ -1,5 +1,5 @@
 import React from 'react'
-import {classNames, statuses} from '../lib/utils'
+import {classNames, formattedStatus, statuses} from '../lib/utils'
 
 export const Status = ({status}: {status: string}) => {
   return (
@@ -9,7 +9,7 @@ export const Status = ({status}: {status: string}) => {
         'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
       )}
     >
-      {status}
+      {formattedStatus(status)}
     </span>
   )
 }

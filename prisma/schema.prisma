@@ -15,8 +15,8 @@ datasource db {
 // schema.prisma
 enum Status {
   COMPLETE
-  INPROGRESS
-  PENDING
+  IN_PROGRESS
+  PLANNED
 }
 
 
@@ -24,8 +24,8 @@ model Todo {
   id        String     @default(cuid()) @id
   title     String
   content   String?
-  status Status @default(PENDING)
-  todoPosibleStatus Status[]
+  status Status @default(PLANNED)
+  todoPosibleStatus Status[] @default([COMPLETE, IN_PROGRESS, PLANNED])
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   dueDate   DateTime?

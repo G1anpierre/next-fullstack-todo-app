@@ -6,6 +6,13 @@ export function classNames(...classes: string[]) {
 
 export const statuses: StatusesType = {
   COMPLETE: 'text-green-700 bg-green-50 ring-green-600/20',
-  'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  PENDING: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  IN_PROGRESS: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  PLANNED: 'text-purple-700 bg-purple-50 ring-purple-600/20',
+}
+
+export const formattedStatus = (status: string) => {
+  return (
+    status.charAt(0).toUpperCase() +
+    status.replace(/_/g, ' ').toLowerCase().slice(1)
+  )
 }

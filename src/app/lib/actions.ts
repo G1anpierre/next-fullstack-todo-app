@@ -8,11 +8,13 @@ const rawFormDataSchema = z.object({
     invalid_type_error: 'Title must be a string',
   }),
   content: z.string().nullable().optional(),
+  status: z.enum(['COMPLETE', 'IN_PROGRESS', 'PLANNED']).optional(),
 })
 
 export async function createTodo(prevState: any, formData: FormData) {
   const rawFormData = {
     title: formData.get('title'),
+    content: formData.get('content'),
   }
 
   const validatedFormData = rawFormDataSchema.safeParse(rawFormData)
@@ -28,6 +30,7 @@ export async function createTodo(prevState: any, formData: FormData) {
     await prisma.todo.create({
       data: {
         title: validatedFormData.data.title,
+        content: validatedFormData.data.content,
       },
     })
   } catch (error) {
@@ -65,6 +68,7 @@ export const updateTodo = async (
   const rawFormData = {
     title: formData.get('title'),
     content: formData.get('content'),
+    status: formData.get('status'),
   }
 
   const validatedFormData = rawFormDataSchema.safeParse(rawFormData)
@@ -84,6 +88,7 @@ export const updateTodo = async (
       data: {
         title: validatedFormData.data.title,
         content: validatedFormData.data.content,
+        status: validatedFormData.data.status,
       },
     })
   } catch (error) {
