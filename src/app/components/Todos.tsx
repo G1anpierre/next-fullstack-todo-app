@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {MenuTodo} from './MenuTodo'
 import {classNames, formattedStatus, statuses} from '../lib/utils'
 import {getTodos} from '../lib/data'
+import {format} from 'date-fns'
 
 export const Todos = async () => {
   const todos = await getTodos()
@@ -36,17 +37,30 @@ export const Todos = async () => {
                 {todo.content}
               </p>
             </div>
-            <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-              <p className="whitespace-nowrap">
-                created at:{' '}
-                <time dateTime={new Date(todo.createdAt).toLocaleDateString()}>
-                  {new Date(todo.createdAt).toLocaleTimeString()}
+            <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 ">
+              <p className="whitespace-nowrap text-green-500">
+                Created at:{' '}
+                <time dateTime={format(new Date(todo.createdAt), 'MM/dd/yyyy')}>
+                  {format(new Date(todo.createdAt), "MM/dd/yyyy 'T' HH:mm:ss")}
                 </time>
               </p>
               <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                 <circle cx={1} cy={1} r={1} />
               </svg>
-              <p className="truncate">by Gianpierre</p>
+              {todo.dueDate ? (
+                <p className="whitespace-nowrap text-red-500">
+                  Due Date:{' '}
+                  <time dateTime={format(new Date(todo.dueDate), 'MM/dd/yyyy')}>
+                    {format(new Date(todo.dueDate), "MM/dd/yyyy 'T' HH:mm:ss")}
+                  </time>
+                </p>
+              ) : (
+                'No Due Date'
+              )}
+              <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
+                <circle cx={1} cy={1} r={1} />
+              </svg>
+              <p className="truncate text-gray-500">by Gianpierre</p>
             </div>
           </div>
           <div className="flex flex-none items-center gap-x-4">

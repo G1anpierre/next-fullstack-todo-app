@@ -4,7 +4,8 @@ import {useFormState} from 'react-dom'
 import {SingleTodoType} from '../lib/types'
 import {StatusDropdown} from './StatusDropdown'
 import Link from 'next/link'
-import { toast } from 'sonner'
+import {toast} from 'sonner'
+import {DueDateSelector} from './DueDateSelector'
 
 export const EditTodoForm = ({
   singleTodo,
@@ -19,13 +20,16 @@ export const EditTodoForm = ({
     const result = await updateTodoWithId(prevState, payLoad)
     if (result.success) {
       toast.success(result.message)
-    }else {
+    } else {
       toast.error(result.message)
     }
     return result
   }
 
   const [state, dispatch] = useFormState(clientAction, initialState)
+
+  console.log('singleTodo :', singleTodo)
+
   return (
     <>
       <form action={dispatch} className="relative">
@@ -67,10 +71,14 @@ export const EditTodoForm = ({
           </div>
         </div>
         <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
-          <div className="flex">
+          <div className="flex gap-4">
             <StatusDropdown
               todoPosibleStatus={singleTodo.todoPosibleStatus}
               defaultValue={singleTodo.status}
+            />
+            <DueDateSelector
+              todoId={singleTodo.id}
+              dueDate={singleTodo.dueDate}
             />
             {/* <button
         type="button"
