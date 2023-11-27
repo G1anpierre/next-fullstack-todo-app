@@ -3,12 +3,13 @@ import {useState, useEffect, forwardRef} from 'react'
 import {format} from 'date-fns'
 import DatePicker from 'react-datepicker'
 import {updateDueDate} from '../lib/api'
+import {toast} from 'sonner'
 
 // eslint-disable-next-line react/display-name
 const CustomInput = forwardRef(({value, onClick}: any, ref: any) => {
   return (
     <button
-      className="border border-gray-300 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+      className="border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
       onClick={onClick}
       ref={ref}
       type="button"
@@ -30,10 +31,13 @@ export const DueDateSelector = ({
   const [startDate, setStartDate] = useState<Date | null | undefined>(dueDate)
 
   const handleChange = async (date: Date) => {
-    setStartDate(date)
     const updatedDueDate = await updateDueDate(todoId, date)
-    // * I need to handle this return value maybe to update the date then..
-    // TODO handle when task is complete
+    if (updatedDueDate.data) {
+      toast.success('Date updated successfully')
+      setStartDate(new Date(updatedDueDate.data.dueDate))
+    } else {
+      toast.error('Something went wrong when updated the date')
+    }
   }
 
   return (
