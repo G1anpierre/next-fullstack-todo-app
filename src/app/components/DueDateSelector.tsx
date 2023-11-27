@@ -1,5 +1,5 @@
 'use client'
-import {useState, useEffect, forwardRef} from 'react'
+import {useState, forwardRef} from 'react'
 import {format} from 'date-fns'
 import DatePicker from 'react-datepicker'
 import {updateDueDate} from '../lib/api'
