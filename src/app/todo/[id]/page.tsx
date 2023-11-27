@@ -8,7 +8,13 @@ import React from 'react'
 const Page = async ({params}: {params: {id: string}}) => {
   const singleTodo = await getTodo(params.id)
 
-  const calendarInfo = [
+  type CalendarInfoType = {
+    id: string
+    title: string
+    date?: Date | null
+  }
+
+  const calendarInfo: CalendarInfoType[] = [
     {
       id: singleTodo.id,
       title: singleTodo.title,

@@ -5,8 +5,13 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'
 import {updateDueDate} from '../lib/api'
 import {toast} from 'sonner'
+import {
+  EventClickArg,
+  EventContentArg,
+  EventDropArg,
+} from '@fullcalendar/core/index.js'
 
-function renderEventContent(eventInfo: any) {
+function renderEventContent(eventInfo: EventContentArg) {
   return (
     <>
       <p className="text-blue-600 font-semibold">Due Date: </p>
@@ -15,9 +20,12 @@ function renderEventContent(eventInfo: any) {
   )
 }
 
-export const Calendar = ({calendarInfo}: {calendarInfo: any}) => {
-  const handleEventDrop = async (info: any) => {
-    const result = await updateDueDate(info.event.id, info.event.startStr)
+export const Calendar = ({calendarInfo}: any) => {
+  const handleEventDrop = async (info: EventDropArg) => {
+    const result = await updateDueDate(
+      info.event.id,
+      new Date(info.event.startStr),
+    )
     if (result.data) {
       toast.success('Date updated successfully')
     } else {
@@ -25,7 +33,7 @@ export const Calendar = ({calendarInfo}: {calendarInfo: any}) => {
     }
   }
 
-  const handleEventClick = (args: any) => {
+  const handleEventClick = (args: EventClickArg) => {
     console.log('args :', args.event.title)
   }
 
