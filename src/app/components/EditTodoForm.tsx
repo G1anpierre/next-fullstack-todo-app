@@ -28,8 +28,6 @@ export const EditTodoForm = ({
 
   const [state, dispatch] = useFormState(clientAction, initialState)
 
-  console.log('singleTodo :', singleTodo)
-
   return (
     <>
       <form action={dispatch} className="relative">
