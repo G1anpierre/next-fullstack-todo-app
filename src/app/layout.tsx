@@ -3,6 +3,7 @@ import {Inter} from 'next/font/google'
 import {Notification} from './components/Notification'
 import './globals.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import {Header} from './components/Header'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -15,6 +16,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Header />
         <div className="p-8 xl:p-24">{children}</div>
         <Notification />
       </body>

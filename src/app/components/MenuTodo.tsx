@@ -4,11 +4,11 @@ import {Fragment} from 'react'
 import Link from 'next/link'
 import {Menu, Transition} from '@headlessui/react'
 import {EllipsisVerticalIcon} from '@heroicons/react/20/solid'
-import {ProjectType} from '../lib/types'
+import {SingleTodoType} from '../lib/types'
 import {classNames} from '../lib/utils'
 import {DeleteTodo} from './DeleteTodo'
 
-export const MenuTodo = ({todo}: {todo: ProjectType}) => {
+export const MenuTodo = ({todo}: {todo: SingleTodoType}) => {
   return (
     <Menu as="div" className="relative flex-none">
       <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
