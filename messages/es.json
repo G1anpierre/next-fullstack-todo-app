@@ -1,0 +1,9 @@
+{
+  "Home": {
+    "inputPlaceHolder": "Agrega una nueva tarea",
+    "addButton": "Agrega Tarea",
+    "viewTodo": "Ver Tarea",
+    "deleteTodo": "Borrar Tarea",
+    "editTodo": "Editar Tarea"
+  }
+}

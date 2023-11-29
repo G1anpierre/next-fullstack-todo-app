@@ -4,8 +4,13 @@ import {classNames, formattedStatus, statuses} from '../lib/utils'
 import {format} from 'date-fns'
 import {MenuTodo} from './MenuTodo'
 import {SingleTodoType} from '../lib/types'
+import {getTranslations} from 'next-intl/server'
+import {NextIntlClientProvider, useMessages} from 'next-intl'
+import pick from 'lodash/pick'
 
-export const Todo = ({todo}: {todo: SingleTodoType}) => {
+export const Todo = async ({todo}: {todo: SingleTodoType}) => {
+  const t = await getTranslations('Home')
+
   return (
     <li
       key={todo.id}
@@ -59,9 +64,15 @@ export const Todo = ({todo}: {todo: SingleTodoType}) => {
           href={`/todo/${todo.id}`}
           className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
         >
-          View To-Do<span className="sr-only">, {todo.title}</span>
+          {t('viewTodo')}
+          <span className="sr-only">, {todo.title}</span>
         </Link>
-        <MenuTodo todo={todo} />
+
+        <MenuTodo
+          todo={todo}
+          editTodo={t('editTodo')}
+          deleteTodo={t('deleteTodo')}
+        />
       </div>
     </li>
   )
