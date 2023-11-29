@@ -1,12 +1,11 @@
 import React from 'react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import {classNames, formattedStatus, statuses} from '../lib/utils'
 import {format} from 'date-fns'
 import {MenuTodo} from './MenuTodo'
 import {SingleTodoType} from '../lib/types'
 import {getTranslations} from 'next-intl/server'
-import {NextIntlClientProvider, useMessages} from 'next-intl'
-import pick from 'lodash/pick'
+import {Link} from '@/navigation'
 
 export const Todo = async ({todo}: {todo: SingleTodoType}) => {
   const t = await getTranslations('Home')

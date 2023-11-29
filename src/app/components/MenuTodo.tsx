@@ -1,12 +1,13 @@
 'use client'
 import React from 'react'
 import {Fragment} from 'react'
-import Link from 'next/link'
+
 import {Menu, Transition} from '@headlessui/react'
 import {EllipsisVerticalIcon} from '@heroicons/react/20/solid'
 import {SingleTodoType} from '../lib/types'
 import {classNames} from '../lib/utils'
 import {DeleteTodo} from './DeleteTodo'
+import {Link} from '@/navigation'
 
 export const MenuTodo = ({
   todo,
