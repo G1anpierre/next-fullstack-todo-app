@@ -1,14 +1,23 @@
 'use client'
 import React from 'react'
 import {Fragment} from 'react'
-import Link from 'next/link'
+
 import {Menu, Transition} from '@headlessui/react'
 import {EllipsisVerticalIcon} from '@heroicons/react/20/solid'
 import {SingleTodoType} from '../lib/types'
 import {classNames} from '../lib/utils'
 import {DeleteTodo} from './DeleteTodo'
+import {Link} from '@/navigation'
 
-export const MenuTodo = ({todo}: {todo: SingleTodoType}) => {
+export const MenuTodo = ({
+  todo,
+  editText,
+  deleteText,
+}: {
+  todo: SingleTodoType
+  editText: string
+  deleteText: string
+}) => {
   return (
     <Menu as="div" className="relative flex-none">
       <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
@@ -35,7 +44,8 @@ export const MenuTodo = ({todo}: {todo: SingleTodoType}) => {
                 )}
               >
                 <span className="flex justify-center rounded-md bg-yellow-500 px-1.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500">
-                  Edit<span className="sr-only">, {todo.title}</span>
+                  {editText}
+                  <span className="sr-only">, {todo.title}</span>
                 </span>
               </Link>
             )}
@@ -48,7 +58,7 @@ export const MenuTodo = ({todo}: {todo: SingleTodoType}) => {
                   'px-3 py-1 text-sm leading-6 text-gray-900',
                 )}
               >
-                <DeleteTodo id={todo.id} />
+                <DeleteTodo id={todo.id} deleteText={deleteText} />
                 {/* <span className="sr-only">, {todo.title}</span> */}
               </div>
             )}

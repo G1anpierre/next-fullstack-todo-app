@@ -1,5 +1,6 @@
 'use client'
 import React, {useState} from 'react'
+import {useTranslations} from 'next-intl'
 import {useFormState} from 'react-dom'
 import {createTodo} from '../lib/actions'
 import {State} from '../lib/types'
@@ -8,6 +9,7 @@ import {toast} from 'sonner'
 export const AddTodoForm = () => {
   const refTitle = React.useRef<HTMLInputElement>(null)
   const refContent = React.useRef<HTMLTextAreaElement>(null)
+
   const initialState = {
     errors: {
       title: [],
@@ -29,6 +31,8 @@ export const AddTodoForm = () => {
 
   const [state, dispatch] = useFormState(clientAction, initialState)
   const [title, setTitle] = useState('')
+
+  const t = useTranslations('Home')
 
   return (
     <form
@@ -58,14 +62,14 @@ export const AddTodoForm = () => {
               type="text"
               defaultValue=""
               className="block w-full rounded-md border-0 text-black bg-white/5 px-3.5 py-2 shadow-md ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-              placeholder="Enter your new To-Do"
+              placeholder={t('inputPlaceHolder')}
             />
           </div>
           <button
             type="submit"
             className="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
-            Add To-Do
+            {t('addButton')}
           </button>
         </div>
         {state.errors.title && (
