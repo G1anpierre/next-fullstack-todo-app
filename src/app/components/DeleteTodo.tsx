@@ -4,10 +4,10 @@ import {toast} from 'sonner'
 
 export const DeleteTodo = ({
   id,
-  deleteTodo: deleteT,
+  deleteText,
 }: {
   id: string
-  deleteTodo: string
+  deleteText: string
 }) => {
   const deleteTodoWithId = deleteTodo.bind(null, id)
 
@@ -27,7 +27,7 @@ export const DeleteTodo = ({
           type="submit"
           className="block w-full rounded-md bg-red-500 px-1.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
         >
-          {deleteT}
+          {deleteText}
         </button>
       </form>
     </>

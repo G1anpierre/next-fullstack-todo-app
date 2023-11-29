@@ -70,8 +70,8 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
 
         <MenuTodo
           todo={todo}
-          editTodo={t('editTodo')}
-          deleteTodo={t('deleteTodo')}
+          editText={t('editTodo')}
+          deleteText={t('deleteTodo')}
         />
       </div>
     </li>
