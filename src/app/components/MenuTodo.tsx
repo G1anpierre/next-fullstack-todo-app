@@ -37,7 +37,7 @@ export const MenuTodo = ({
           <Menu.Item>
             {({active}) => (
               <Link
-                href={`/edit/${todo.id}`}
+                href={`/edit/${todo.todoId}`}
                 className={classNames(
                   active ? 'bg-gray-50' : '',
                   'block px-3 py-1 text-sm leading-6 text-gray-900',
@@ -58,7 +58,7 @@ export const MenuTodo = ({
                   'px-3 py-1 text-sm leading-6 text-gray-900',
                 )}
               >
-                <DeleteTodo id={todo.id} deleteText={deleteText} />
+                <DeleteTodo id={todo.todoId} deleteText={deleteText} />
                 {/* <span className="sr-only">, {todo.title}</span> */}
               </div>
             )}

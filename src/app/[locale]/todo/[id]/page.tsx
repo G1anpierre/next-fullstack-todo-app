@@ -16,7 +16,7 @@ const Page = async ({params}: {params: {id: string}}) => {
 
   const calendarInfo: CalendarInfoType[] = [
     {
-      id: singleTodo.id,
+      id: singleTodo.todoId,
       title: singleTodo.title,
       date: singleTodo.dueDate,
     },
@@ -26,7 +26,7 @@ const Page = async ({params}: {params: {id: string}}) => {
     <div>
       <Breadcrumbs
         breadcrumbs={[
-          {label: `To-Do's`, href: '/'},
+          {label: `To-Do's`, href: '/dashboard'},
           {
             label: 'View To-Do',
             href: `/todo/${params.id}`,
