@@ -24,4 +24,28 @@ export type State = {
   success: boolean
 }
 
+export type User = {
+  id: string
+  name: string
+  email: string
+  password: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+declare module 'next-auth' {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      /** The user's postal address. */
+      name: string
+      email: string
+      image: string
+      id: string
+    }
+  }
+}
+
 export type SingleTodoType = z.infer<typeof SingleTodoSchema>

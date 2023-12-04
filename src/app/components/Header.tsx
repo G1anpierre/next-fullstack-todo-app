@@ -1,6 +1,9 @@
 import React from 'react'
 import {EnvelopeIcon, PhoneIcon} from '@heroicons/react/20/solid'
 import {SwitchLocale} from './SwitchLocale'
+import {LogoutButton} from './LogoutButton'
+import {getServerSession} from 'next-auth/next'
+import auth from '../../../auth'
 
 const profile = {
   name: 'Ricardo Cooper',
@@ -21,7 +24,10 @@ const profile = {
   ],
 }
 
-export const Header = () => {
+export const Header = async () => {
+  const session = await getServerSession(auth)
+  console.log('result :', session?.user)
+
   return (
     <div>
       <div className="relative">
@@ -30,7 +36,12 @@ export const Header = () => {
           src={profile.backgroundImage}
           alt=""
         />
-        <SwitchLocale />
+        <div className="absolute top-10 right-10">
+          <div className="flex gap-2">
+            <LogoutButton />
+            <SwitchLocale />
+          </div>
+        </div>
       </div>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative">
         <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
@@ -44,7 +55,7 @@ export const Header = () => {
           <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
             <div className="mt-6 min-w-0 flex-1 sm:hidden md:block">
               <h1 className="truncate text-2xl font-bold text-gray-900">
-                {profile.name}
+                {session?.user?.name}
               </h1>
             </div>
             <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">

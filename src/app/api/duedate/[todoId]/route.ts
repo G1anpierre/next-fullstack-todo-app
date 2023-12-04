@@ -12,7 +12,7 @@ export const PATCH = async (
   try {
     const updatedDueDate = await prisma.todo.update({
       where: {
-        id: todoId,
+        todoId: todoId,
       },
       data: {
         dueDate: content,

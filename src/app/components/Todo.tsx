@@ -12,7 +12,7 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
 
   return (
     <li
-      key={todo.id}
+      key={todo.todoId}
       className="flex items-center justify-between gap-x-6 py-5"
     >
       <div className="min-w-0">
@@ -55,12 +55,12 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
           <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          <p className="truncate text-gray-500">by Gianpierre</p>
+          <p className="truncate text-gray-500">by {todo?.author?.name}</p>
         </div>
       </div>
       <div className="flex flex-none items-center gap-x-4">
         <Link
-          href={`/todo/${todo.id}`}
+          href={`/todo/${todo.todoId}`}
           className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
         >
           {t('viewTodo')}

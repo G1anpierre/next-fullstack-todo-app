@@ -3,6 +3,8 @@ import {prisma} from './database-prisma'
 import {z} from 'zod'
 import {revalidatePath} from 'next/cache'
 import {State} from './types'
+import {getServerSession} from 'next-auth'
+import auth from '../../../auth'
 
 const rawFormDataSchema = z.object({
   title: z.string().min(3, {message: 'Must be 5 or more characters long'}),
@@ -26,11 +28,14 @@ export async function createTodo(prevState: State, formData: FormData) {
     }
   }
 
+  const session = await getServerSession(auth)
+
   try {
     await prisma.todo.create({
       data: {
         title: validatedFormData.data.title,
         content: validatedFormData.data.content,
+        authorId: String(session?.user.id),
       },
     })
     revalidatePath('/')
@@ -52,7 +57,7 @@ export const deleteTodo = async (id: string) => {
   try {
     await prisma.todo.delete({
       where: {
-        id: id,
+        todoId: id,
       },
     })
     revalidatePath('/')
@@ -94,7 +99,7 @@ export const updateTodo = async (
   try {
     await prisma.todo.update({
       where: {
-        id,
+        todoId: id,
       },
       data: {
         title: validatedFormData.data.title,
@@ -116,4 +121,11 @@ export const updateTodo = async (
       success: false,
     }
   }
+}
+
+export const authenticate = async (
+  prevState: string | undefined,
+  formData: FormData,
+) => {
+  return null
 }

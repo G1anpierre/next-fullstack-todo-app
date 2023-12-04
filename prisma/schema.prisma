@@ -21,24 +21,26 @@ enum Status {
 
 
 model Todo {
-  id        String     @default(cuid()) @id
+  todoId    String @id @default(cuid()) 
   title     String
   content   String?
   status Status @default(PLANNED)
   todoPosibleStatus Status[] @default([COMPLETE, IN_PROGRESS, PLANNED])
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   dueDate   DateTime?
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+  author    User? @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  @@index([authorId, todoId])
 }
 
 model User {
-  id            String       @default(cuid()) @id
+  id            String @id @default(cuid()) 
   name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Todo[]
-  @@map(name: "users")
+  email         String? @unique
+  password      String
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  todos         Todo[]
 }
