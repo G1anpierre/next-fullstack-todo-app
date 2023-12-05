@@ -49,7 +49,7 @@ export const AddTodoForm = () => {
       className="max-w-2xl mx-auto"
     >
       <div className="flex flex-col">
-        <div className="flex gap-x-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <label htmlFor="title" className="sr-only">
               To-Do
@@ -79,7 +79,6 @@ export const AddTodoForm = () => {
             ))}
           </p>
         )}
-
         {title.length > 0 && (
           <div className="mt-4">
             <label htmlFor="content" className="sr-only">
@@ -91,7 +90,7 @@ export const AddTodoForm = () => {
               id="content"
               rows={4}
               className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-md ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-              placeholder="Optional: Enter your new To-Do Description"
+              placeholder={t('inputDescriptionPlace')}
             />
           </div>
         )}

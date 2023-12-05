@@ -1,9 +1,12 @@
 {
   "Home": {
     "inputPlaceHolder": "Agrega una nueva tarea",
+    "inputDescriptionPlace": "Opcional: Agrega una nueva descripción para la Tarea",
     "addButton": "Agrega Tarea",
     "viewTodo": "Ver Tarea",
     "deleteTodo": "Borrar Tarea",
-    "editTodo": "Editar Tarea"
+    "editTodo": "Editar Tarea",
+    "dueDate": "fecha de vencimiento",
+    "createAt": "Creado el"
   }
 }

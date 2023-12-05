@@ -34,7 +34,7 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
         </div>
         <div className="mt-1 flex flex-col sm:flex-row sm:items-center gap-x-2 text-xs leading-5 ">
           <p className="whitespace-nowrap text-green-500">
-            Created at:{' '}
+            <span>{t('createAt')}: </span>
             <time dateTime={format(new Date(todo.createdAt), 'MM/dd/yyyy')}>
               {format(new Date(todo.createdAt), "MM/dd/yyyy 'T' HH:mm:ss")}
             </time>
@@ -44,13 +44,13 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
           </svg>
           {todo.dueDate ? (
             <p className="whitespace-nowrap text-red-500">
-              Due Date:{' '}
+              <span>{t('dueDate')}: </span>
               <time dateTime={format(new Date(todo.dueDate), 'MM/dd/yyyy')}>
                 {format(new Date(todo.dueDate), "MM/dd/yyyy 'T' HH:mm:ss")}
               </time>
             </p>
           ) : (
-            'No Due Date'
+            <span>No {t('dueDate')}</span>
           )}
           <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
             <circle cx={1} cy={1} r={1} />
