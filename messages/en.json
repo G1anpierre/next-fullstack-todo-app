@@ -7,6 +7,7 @@
     "deleteTodo": "Delete To-Do",
     "editTodo": "Edit To-Do",
     "dueDate": "Due Date",
-    "createAt": "Create At"
+    "createAt": "Create At",
+    "createBy": "Create By {name}"
   }
 }

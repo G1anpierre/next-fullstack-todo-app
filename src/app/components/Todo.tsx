@@ -55,7 +55,9 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
           <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          <p className="truncate text-gray-500">by {todo?.author?.name}</p>
+          <p className="truncate text-gray-500">
+            {t('createBy', {name: `${todo?.author?.name}`})}
+          </p>
         </div>
       </div>
       <div className="flex flex-none items-center gap-x-4">
