@@ -5,7 +5,7 @@ import {Fragment} from 'react'
 import {Menu, Transition} from '@headlessui/react'
 import {EllipsisVerticalIcon} from '@heroicons/react/20/solid'
 import {SingleTodoType} from '../lib/types'
-import {classNames} from '../lib/utils'
+import {classNamesLib} from '../lib/utils'
 import {DeleteTodo} from './DeleteTodo'
 import {Link} from '@/navigation'
 
@@ -38,7 +38,7 @@ export const MenuTodo = ({
             {({active}) => (
               <Link
                 href={`/edit/${todo.todoId}`}
-                className={classNames(
+                className={classNamesLib(
                   active ? 'bg-gray-50' : '',
                   'block px-3 py-1 text-sm leading-6 text-gray-900',
                 )}
@@ -53,7 +53,7 @@ export const MenuTodo = ({
           <Menu.Item>
             {({active}) => (
               <div
-                className={classNames(
+                className={classNamesLib(
                   active ? 'bg-gray-50' : '',
                   'px-3 py-1 text-sm leading-6 text-gray-900',
                 )}

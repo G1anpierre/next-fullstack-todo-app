@@ -10,23 +10,29 @@ import Link from 'next/link'
 import {signUpUser} from '../lib/api'
 import {useRouter} from 'next/navigation'
 import {useForm, SubmitHandler} from 'react-hook-form'
-
-type IFormRegister = {
-  name: string
-  email: string
-  password: string
-}
+import {zodResolver} from '@hookform/resolvers/zod'
+import {toast} from 'sonner'
+import {SignUpSchema, SignUpSchemaType} from '../lib/types'
+import {getClassNames} from '../lib/utils'
 
 export const SignupForm = () => {
-  const {register, handleSubmit} = useForm<IFormRegister>()
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<SignUpSchemaType>({
+    resolver: zodResolver(SignUpSchema),
+  })
 
   const router = useRouter()
-  const onSubmit: SubmitHandler<IFormRegister> = async form => {
+  const onSubmit: SubmitHandler<SignUpSchemaType> = async form => {
     const data = await signUpUser(form)
     if (data.success) {
+      toast.success(data.message)
       router.push('/dashboard')
     } else {
       console.log('error', data)
+      toast.error(data.message)
     }
   }
 
@@ -44,14 +50,21 @@ export const SignupForm = () => {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={getClassNames(
+                  'peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  errors.name,
+                )}
                 id="name"
                 type="text"
                 placeholder="Enter your Name"
-                required
                 {...register('name')}
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <ExclamationCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div className="h-2">
+              {errors.name && (
+                <p className="text-xs text-red-500">{errors.name.message}</p>
+              )}
             </div>
           </div>
           <div className="mt-4">
@@ -63,14 +76,21 @@ export const SignupForm = () => {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={getClassNames(
+                  'peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  errors.email,
+                )}
                 id="email"
                 type="email"
                 placeholder="Enter your email address"
-                required
                 {...register('email')}
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div className="h-2">
+              {errors.email && (
+                <p className="text-xs text-red-500">{errors.email.message}</p>
+              )}
             </div>
           </div>
           <div className="mt-4">
@@ -82,15 +102,24 @@ export const SignupForm = () => {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={getClassNames(
+                  'peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  errors.password,
+                )}
                 id="password"
                 type="password"
                 placeholder="Enter password"
-                required
                 minLength={6}
                 {...register('password')}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div className="h-2">
+              {errors.password && (
+                <p className="text-xs text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           </div>
         </div>

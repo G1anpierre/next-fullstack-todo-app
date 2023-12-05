@@ -11,6 +11,11 @@ import {useFormState, useFormStatus} from 'react-dom'
 import Link from 'next/link'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import {signIn} from 'next-auth/react'
+import {SignInSchema, SignInSchemaType} from '../lib/types'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {getClassNames} from '../lib/utils'
+import {toast} from 'sonner'
+import {useRouter} from 'next/navigation'
 
 type IFormInput = {
   email: string
@@ -18,17 +23,28 @@ type IFormInput = {
 }
 
 export default function LoginForm() {
-  const {register, handleSubmit} = useForm<IFormInput>()
-  const onSubmit: SubmitHandler<IFormInput> = async data => {
+  const router = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<IFormInput>({
+    resolver: zodResolver(SignInSchema),
+  })
+  const onSubmit: SubmitHandler<SignInSchemaType> = async data => {
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
       callbackUrl: `${window.location.origin}/dashboard`,
+      redirect: false,
     })
+
     if (result?.error) {
-      console.log('result.error : ', result.error)
+      toast.error(result.error)
     } else {
-      console.log('result : ', result)
+      toast.success('Login successful')
+      router.push('/dashboard')
     }
   }
 
@@ -47,12 +63,19 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={getClassNames(
+                  'peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  errors.email,
+                )}
                 placeholder="Enter your email address"
-                required
                 {...register('email')}
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div className="h-2">
+              {errors.email && (
+                <p className="text-xs text-red-500">{errors.email.message}</p>
+              )}
             </div>
           </div>
           <div className="mt-4">
@@ -64,15 +87,23 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className={getClassNames(
+                  'peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500',
+                  errors.password,
+                )}
                 id="password"
                 type="password"
                 placeholder="Enter password"
-                required
-                // minLength={6}
                 {...register('password')}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+            <div className="h-2">
+              {errors.password && (
+                <p className="text-xs text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           </div>
         </div>

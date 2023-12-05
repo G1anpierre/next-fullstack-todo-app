@@ -1,6 +1,6 @@
 import React from 'react'
 // import Link from 'next/link'
-import {classNames, formattedStatus, statuses} from '../lib/utils'
+import {classNamesLib, formattedStatus, statuses} from '../lib/utils'
 import {format} from 'date-fns'
 import {MenuTodo} from './MenuTodo'
 import {SingleTodoType} from '../lib/types'
@@ -21,7 +21,7 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
             {todo.title}
           </p>
           <p
-            className={classNames(
+            className={classNamesLib(
               statuses[todo.status],
               'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
             )}
