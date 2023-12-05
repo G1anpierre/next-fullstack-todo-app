@@ -1,3 +1,5 @@
+import {SignUpSchemaType} from './types'
+
 export const updateDueDate = async (todoId: string, content: Date) => {
   const response = await fetch(
     new Request(`/api/duedate/${todoId}`, {
@@ -10,7 +12,7 @@ export const updateDueDate = async (todoId: string, content: Date) => {
   return data
 }
 
-export const signUpUser = async (form: any) => {
+export const signUpUser = async (form: SignUpSchemaType) => {
   const response = await fetch(
     new Request(`/api/user`, {
       method: 'POST',
