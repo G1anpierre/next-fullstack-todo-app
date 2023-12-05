@@ -1,0 +1,13 @@
+{
+  "Home": {
+    "inputPlaceHolder": "Add a new To-Do",
+    "inputDescriptionPlace": "Optional: Enter your new To-Do Description",
+    "addButton": "Add To-Do",
+    "viewTodo": "View To-Do",
+    "deleteTodo": "Delete To-Do",
+    "editTodo": "Edit To-Do",
+    "dueDate": "Due Date",
+    "createAt": "Create At",
+    "createBy": "Create By {name}"
+  }
+}

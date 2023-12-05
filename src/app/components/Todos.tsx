@@ -13,7 +13,7 @@ export const Todos = async () => {
         </div>
       ) : null}
       {todos.map(todo => (
-        <Todo todo={todo} key={todo.id} />
+        <Todo todo={todo} key={todo.todoId} />
       ))}
     </ul>
   )

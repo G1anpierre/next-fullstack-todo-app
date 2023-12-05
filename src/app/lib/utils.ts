@@ -1,6 +1,8 @@
 import {StatusesType} from './types'
+import classNames  from 'classnames'
 
-export function classNames(...classes: string[]) {
+
+export function classNamesLib(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -15,4 +17,10 @@ export const formattedStatus = (status: string) => {
     status.charAt(0).toUpperCase() +
     status.replace(/_/g, ' ').toLowerCase().slice(1)
   )
+}
+
+export const getClassNames = <T>(defaultClasses: string, error: T) => {
+  return classNames(defaultClasses, {
+    'border-red-500': !!error,
+  })
 }

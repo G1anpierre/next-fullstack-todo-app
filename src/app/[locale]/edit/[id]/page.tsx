@@ -13,7 +13,7 @@ const EditPage = async ({params}: {params: {id: string}}) => {
     <div>
       <Breadcrumbs
         breadcrumbs={[
-          {label: `To-Do's`, href: '/'},
+          {label: `To-Do's`, href: '/dashboard'},
           {
             label: 'Edit To-Do',
             href: `/edit/${params.id}`,
