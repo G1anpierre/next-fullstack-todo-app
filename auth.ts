@@ -1,5 +1,6 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
+import DiscordProvider from 'next-auth/providers/discord'
 import {NextAuthOptions} from 'next-auth'
 
 import bcrypt from 'bcrypt'
@@ -22,6 +23,10 @@ const auth: NextAuthOptions = {
     GitHubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || '',
+    }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || '',
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
     }),
     CredentialsProvider({
       name: 'Credentials',
