@@ -17,7 +17,7 @@ import {getClassNames} from '../lib/utils'
 import {toast} from 'sonner'
 import {useRouter} from 'next/navigation'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faGithub, faDiscord} from '@fortawesome/free-brands-svg-icons'
+import {faGithub, faDiscord, faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 type IFormInput = {
   email: string
@@ -143,7 +143,7 @@ export default function LoginForm() {
             </span>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-4">
           <button
             onClick={() =>
               signIn('discord', {
@@ -156,7 +156,6 @@ export default function LoginForm() {
             <FontAwesomeIcon icon={faDiscord} />
             <span className="text-sm font-semibold leading-6">Discord</span>
           </button>
-
           <button
             onClick={() =>
               signIn('github', {
@@ -168,6 +167,18 @@ export default function LoginForm() {
           >
             <FontAwesomeIcon icon={faGithub} />
             <span className="text-sm font-semibold leading-6">GitHub</span>
+          </button>
+          <button
+            onClick={() =>
+              signIn('google', {
+                callbackUrl: `${window.location.origin}/dashboard`,
+              })
+            }
+            type="button"
+            className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24a0ed] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+          >
+            <FontAwesomeIcon icon={faGoogle} />
+            <span className="text-sm font-semibold leading-6">Google</span>
           </button>
         </div>
       </div>
