@@ -1,5 +1,7 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
+import DiscordProvider from 'next-auth/providers/discord'
+import GoogleProvider from 'next-auth/providers/google'
 import {NextAuthOptions} from 'next-auth'
 
 import bcrypt from 'bcrypt'
@@ -11,7 +13,7 @@ const auth: NextAuthOptions = {
   pages: {
     signIn: '/login',
     signOut: '/logout',
-    error: '/signin',
+    // error: '/signin',
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
@@ -20,8 +22,16 @@ const auth: NextAuthOptions = {
   debug: true,
   providers: [
     GitHubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: process.env.GITHUB_ID || '',
+      clientSecret: process.env.GITHUB_SECRET || '',
+    }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || '',
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -45,7 +55,7 @@ const auth: NextAuthOptions = {
           return null
         }
 
-        const isValid = await bcrypt.compare(password, user.password)
+        const isValid = await bcrypt.compare(password, String(user.password))
 
         if (isValid) {
           return user
