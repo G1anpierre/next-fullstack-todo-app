@@ -1,7 +1,7 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GitHubProvider from 'next-auth/providers/github'
 import {NextAuthOptions} from 'next-auth'
 
-import {z} from 'zod'
 import bcrypt from 'bcrypt'
 import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import {prisma} from '@/app/lib/database-prisma'
@@ -17,7 +17,12 @@ const auth: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  debug: true,
   providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
+    }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
