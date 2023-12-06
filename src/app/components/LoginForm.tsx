@@ -157,8 +157,9 @@ export default function LoginForm() {
             <span className="text-sm font-semibold leading-6">Twitter</span>
           </a>
 
-          <span
+          <button
             onClick={() => signIn('github')}
+            type="button"
             className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
           >
             <svg
@@ -174,7 +175,7 @@ export default function LoginForm() {
               />
             </svg>
             <span className="text-sm font-semibold leading-6">GitHub</span>
-          </span>
+          </button>
         </div>
       </div>
     </form>
