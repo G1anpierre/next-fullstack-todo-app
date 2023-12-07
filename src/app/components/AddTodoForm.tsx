@@ -1,7 +1,7 @@
 'use client'
 import React, {useState} from 'react'
 import {useTranslations} from 'next-intl'
-import {useFormState} from 'react-dom'
+import {useFormState, useFormStatus} from 'react-dom'
 import {createTodo} from '../lib/actions'
 import {State} from '../lib/types'
 import {toast} from 'sonner'
@@ -19,6 +19,7 @@ export const AddTodoForm = () => {
   } as State
 
   const clientAction = async (prevState: State, payLoad: FormData) => {
+    // * Probably I could add setOptimisticUpdateHere
     const result = await createTodo(prevState, payLoad)
     if (result.errors) {
       toast.error(result.message)
@@ -30,6 +31,8 @@ export const AddTodoForm = () => {
   }
 
   const [state, dispatch] = useFormState(clientAction, initialState)
+  const {pending} = useFormStatus()
+
   const [title, setTitle] = useState('')
 
   const t = useTranslations('Home')
@@ -67,7 +70,9 @@ export const AddTodoForm = () => {
           </div>
           <button
             type="submit"
-            className="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            className="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+            aria-disabled={pending}
+            disabled={pending}
           >
             {t('addButton')}
           </button>

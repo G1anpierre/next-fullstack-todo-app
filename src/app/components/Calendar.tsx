@@ -40,13 +40,13 @@ export const Calendar = ({calendarInfo}: any) => {
   return (
     <FullCalendar
       plugins={[dayGridPlugin, interactionPlugin]}
-      initialView="dayGridMonth"
+      initialView="dayGridWeek"
       headerToolbar={{
         left: 'prev,next today',
         center: 'title',
         right: '',
       }}
-      weekends={false}
+      weekends={true}
       events={calendarInfo}
       eventColor="#378006"
       eventClick={handleEventClick}
@@ -54,6 +54,7 @@ export const Calendar = ({calendarInfo}: any) => {
       droppable={true}
       editable={true}
       nowIndicator={true}
+      initialDate={calendarInfo[0].date}
       eventDrop={handleEventDrop}
       // dateClick={handleDateClick}
       eventContent={renderEventContent}

@@ -8,6 +8,8 @@
     "editTodo": "Edit To-Do",
     "dueDate": "Due Date",
     "createAt": "Create At",
-    "createBy": "Create By {name}"
+    "createBy": "Create By {name}",
+    "messageIcon": "Messages",
+    "calendarIcon": "Calendar"
   }
 }

@@ -8,6 +8,8 @@
     "editTodo": "Editar Tarea",
     "dueDate": "fecha de vencimiento",
     "createAt": "Creado el",
-    "createBy": "Creado por {name}"
+    "createBy": "Creado por {name}",
+    "messageIcon": "Mensajes",
+    "calendarIcon": "Calendario"
   }
 }

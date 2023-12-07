@@ -1,7 +1,7 @@
 import React from 'react'
 // import Link from 'next/link'
 import {classNamesLib, formattedStatus, statuses} from '../lib/utils'
-import {format} from 'date-fns'
+import {format, formatDistance} from 'date-fns'
 import {MenuTodo} from './MenuTodo'
 import {SingleTodoType} from '../lib/types'
 import {getTranslations} from 'next-intl/server'
@@ -36,7 +36,7 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
           <p className="whitespace-nowrap text-green-500">
             <span>{t('createAt')}: </span>
             <time dateTime={format(new Date(todo.createdAt), 'MM/dd/yyyy')}>
-              {format(new Date(todo.createdAt), "MM/dd/yyyy 'T' HH:mm:ss")}
+              {format(new Date(todo.createdAt), "MM/dd/yyyy '|' HH:mm")}
             </time>
           </p>
           <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
@@ -46,7 +46,7 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
             <p className="whitespace-nowrap text-red-500">
               <span>{t('dueDate')}: </span>
               <time dateTime={format(new Date(todo.dueDate), 'MM/dd/yyyy')}>
-                {format(new Date(todo.dueDate), "MM/dd/yyyy 'T' HH:mm:ss")}
+                {format(new Date(todo.dueDate), "MM/dd/yyyy '|' HH:mm")}
               </time>
             </p>
           ) : (
@@ -55,9 +55,16 @@ export const Todo = async ({todo}: {todo: SingleTodoType}) => {
           <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          <p className="truncate text-gray-500">
-            {t('createBy', {name: `${todo?.author?.name}`})}
-          </p>
+          {todo.dueDate ? (
+            <p className="truncate text-gray-500">
+              {formatDistance(new Date(todo.dueDate), new Date(), {
+                addSuffix: true,
+              })}
+            </p>
+          ) : null}
+        </div>
+        <div className="truncate text-gray-500 text-xs">
+          {t('createBy', {name: `${todo?.author?.name}`})}
         </div>
       </div>
       <div className="flex flex-none items-center gap-x-4">
