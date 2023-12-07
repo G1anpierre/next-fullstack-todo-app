@@ -45,6 +45,8 @@ export const DueDateSelector = ({
       selected={startDate}
       onChange={handleChange}
       customInput={<CustomInput />}
+      showTimeSelect
+      monthsShown={2}
     />
   )
 }
