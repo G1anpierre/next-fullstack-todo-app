@@ -5,6 +5,7 @@ import {LogoutButton} from './LogoutButton'
 import {getServerSession} from 'next-auth/next'
 import auth from '../../../auth'
 import {getTranslations} from 'next-intl/server'
+import {DarkmodeToggleButton} from './DarkmodeToggleButton'
 
 const profile = {
   name: 'Ricardo Cooper',
@@ -39,10 +40,12 @@ export const Header = async () => {
         />
         <div className="absolute top-10 right-10">
           <div className="flex gap-2">
+            <DarkmodeToggleButton />
             <LogoutButton />
             <SwitchLocale />
           </div>
         </div>
+        <div className="absolute top-10 left-10"></div>
       </div>
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative">
         <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
