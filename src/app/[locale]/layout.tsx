@@ -25,7 +25,10 @@ export default function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.className} dark:bg-black`}>
+      <body
+        className={`${inter.className} dark:bg-black`}
+        suppressHydrationWarning
+      >
         <ThemeToggle>{children}</ThemeToggle>
       </body>
       <Notification />
