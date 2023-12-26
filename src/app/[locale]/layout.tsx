@@ -1,8 +1,8 @@
 import {Inter} from 'next/font/google'
 import {notFound} from 'next/navigation'
 import './globals.css'
-import {Header} from '../components/Header'
 import {Notification} from '../components/Notification'
+import ThemeToggle from '../components/ThemeToggle'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -24,10 +24,14 @@ export default function RootLayout({
   if (!locales.includes(locale as any)) notFound()
 
   return (
-    <html lang={locale}>
-      <body className={`${inter.className}`}>{children}</body>
+    <html lang={locale} suppressHydrationWarning>
+      <body
+        className={`${inter.className} dark:bg-black`}
+        suppressHydrationWarning
+      >
+        <ThemeToggle>{children}</ThemeToggle>
+      </body>
       <Notification />
-
     </html>
   )
 }
