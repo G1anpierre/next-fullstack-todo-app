@@ -1,13 +1,9 @@
 'use client'
-// import {lusitana} from '@/app/ui/fonts'
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline'
+
+import {AtSymbolIcon, KeyIcon} from '@heroicons/react/24/outline'
 import {ArrowRightIcon} from '@heroicons/react/20/solid'
 import {Button} from './Button'
-import {useFormState, useFormStatus} from 'react-dom'
+import {useFormStatus} from 'react-dom'
 import Link from 'next/link'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import {signIn} from 'next-auth/react'
@@ -18,6 +14,7 @@ import {toast} from 'sonner'
 import {useRouter} from 'next/navigation'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGithub, faDiscord, faGoogle} from '@fortawesome/free-brands-svg-icons'
+import {Loading} from './Loading'
 
 type IFormInput = {
   email: string
@@ -187,9 +184,15 @@ export default function LoginForm() {
 }
 
 function LoginButton() {
-  // const {pending} = useFormStatus()
+  const {pending} = useFormStatus()
   return (
-    <Button className="mt-4 w-full" aria-disabled={false} type="submit">
+    <Button
+      className="mt-4 w-full"
+      aria-disabled={pending}
+      disabled={pending}
+      type="submit"
+    >
+      {pending && <Loading />}
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   )
