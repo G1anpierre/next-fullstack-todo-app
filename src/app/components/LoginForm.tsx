@@ -192,8 +192,12 @@ function LoginButton() {
       disabled={pending}
       type="submit"
     >
-      {pending && <Loading />}
-      Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+      <div className="flex gap-2">
+        {pending && <Loading />}
+        <div>
+          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+        </div>
+      </div>
     </Button>
   )
 }

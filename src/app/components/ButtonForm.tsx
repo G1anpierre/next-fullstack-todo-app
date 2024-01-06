@@ -15,8 +15,10 @@ export const ButtonForm = () => {
       aria-disabled={pending}
       disabled={pending}
     >
-      {pending && <Loading />}
-      {t('addButton')}
+      <div className="flex gap-2">
+        {pending && <Loading />}
+        {t('addButton')}
+      </div>
     </button>
   )
 }
