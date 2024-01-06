@@ -1,3 +1,5 @@
+'use client'
+
 import {useTranslations} from 'next-intl'
 import {useFormStatus} from 'react-dom'
 import {Loading} from './Loading'
