@@ -3,6 +3,7 @@ import GitHubProvider from 'next-auth/providers/github'
 import DiscordProvider from 'next-auth/providers/discord'
 import GoogleProvider from 'next-auth/providers/google'
 import {NextAuthOptions} from 'next-auth'
+import Stripe from 'stripe'
 
 import bcrypt from 'bcrypt'
 import {PrismaAdapter} from '@next-auth/prisma-adapter'
@@ -81,8 +82,41 @@ const auth: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
+          stripeCustomerId: user.stripeCustomerId,
+          isActive: user.isActive,
         },
       }
+    },
+  },
+  events: {
+    // async signIn({user, account, profile, isNewUser}) {
+    //   if (isNewUser) {
+    //     await prisma.user.create({
+    //       data: {
+    //         id: user.id,
+    //         name: user.name,
+    //         email: user.email,
+    //         image: user.image,
+    //       },
+    //     })
+    //   }
+    // },
+    createUser: async ({user}) => {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2023-10-16',
+      })
+      const customer = await stripe.customers.create({
+        name: user.name!,
+        email: user.email!,
+      })
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          stripeCustomerId: customer.id,
+        },
+      })
     },
   },
 }
