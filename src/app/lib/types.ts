@@ -1,5 +1,6 @@
 import {SingleTodoSchema} from './data'
 import {z} from 'zod'
+import {DefaultUser} from 'next-auth'
 
 export type StatusesType = {
   [key: string]: string
@@ -38,13 +39,17 @@ declare module 'next-auth' {
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
+    user: DefaultUser & {
       /** The user's postal address. */
-      name: string
-      email: string
-      image: string
       id: string
+      stripeCustomerId: string
+      isActive: boolean
     }
+  }
+  interface User extends DefaultUser {
+    /** The user's postal address. */
+    stripeCustomerId: string | null
+    isActive: boolean
   }
 }
 
@@ -64,3 +69,27 @@ export const SignInSchema = z.object({
 })
 
 export type SignInSchemaType = z.infer<typeof SignInSchema>
+
+export type StripePlanType = {
+  id: string
+  object: string
+  active: boolean
+  billing_scheme: string
+  created: number
+  currency: string
+  custom_unit_amount: null
+  livemode: boolean
+  lookup_key: null
+  metadata: Metadata
+  nickname: null
+  product: string
+  recurring: null
+  tax_behavior: string
+  tiers_mode: null
+  transform_quantity: null
+  type: string
+  unit_amount: number
+  unit_amount_decimal: string
+}
+
+export type Metadata = {}

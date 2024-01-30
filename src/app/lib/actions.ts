@@ -5,6 +5,8 @@ import {revalidatePath} from 'next/cache'
 import {State} from './types'
 import {getServerSession} from 'next-auth'
 import auth from '../../../auth'
+import Stripe from 'stripe'
+import {redirect} from 'next/navigation'
 
 const rawFormDataSchema = z.object({
   title: z.string().min(3, {message: 'Must be 5 or more characters long'}),
@@ -128,4 +130,27 @@ export const authenticate = async (
   formData: FormData,
 ) => {
   return null
+}
+
+export const checkoutStripe = async (planID: string) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2023-10-16',
+  })
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price: planID,
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${process.env.NEXTAUTH_URL}/success`,
+    cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
+  })
+
+  if (session.url) {
+    redirect(session.url)
+  }
 }

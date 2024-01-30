@@ -1,6 +1,5 @@
 import {StatusesType} from './types'
-import classNames  from 'classnames'
-
+import classNames from 'classnames'
 
 export function classNamesLib(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -23,4 +22,8 @@ export const getClassNames = <T>(defaultClasses: string, error: T) => {
   return classNames(defaultClasses, {
     'border-red-500': !!error,
   })
+}
+
+export const classNamesFilter = (...classes: string[]) => {
+  return classes.filter(Boolean).join(' ')
 }

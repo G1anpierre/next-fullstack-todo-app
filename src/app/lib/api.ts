@@ -1,5 +1,6 @@
-import {SignUpSchemaType} from './types'
+import {SignUpSchemaType, StripePlanType} from './types'
 
+// * called from a client component
 export const updateDueDate = async (todoId: string, content: Date) => {
   const response = await fetch(
     new Request(`/api/duedate/${todoId}`, {
@@ -12,6 +13,7 @@ export const updateDueDate = async (todoId: string, content: Date) => {
   return data
 }
 
+// * called from a client component
 export const signUpUser = async (form: SignUpSchemaType) => {
   const response = await fetch(
     new Request(`/api/user`, {
@@ -26,4 +28,16 @@ export const signUpUser = async (form: SignUpSchemaType) => {
 
   const data = await response.json()
   return data
+}
+
+// * called from a server component
+export const getPricing = async () => {
+  const response = await fetch(
+    new Request(`${process.env.NEXTAUTH_URL}/api/stripe/stripeplans`, {
+      method: 'GET',
+    }),
+  )
+
+  const pricing = await response.json()
+  return pricing.data as StripePlanType[]
 }
