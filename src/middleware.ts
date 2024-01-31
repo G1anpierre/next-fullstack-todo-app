@@ -6,6 +6,7 @@ import {NextRequest} from 'next/server'
 const publicPages = [
   '/login',
   '/signup',
+  '/',
   // (/secret requires auth)
 ]
 

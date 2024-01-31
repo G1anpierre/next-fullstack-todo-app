@@ -82,8 +82,8 @@ const auth: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
-          stripeCustomerId: user.stripeCustomerId,
-          isActive: user.isActive,
+          stripeCustomerId: user?.stripeCustomerId,
+          isActive: user?.isActive,
         },
       }
     },

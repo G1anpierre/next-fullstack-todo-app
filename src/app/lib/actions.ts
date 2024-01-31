@@ -137,7 +137,12 @@ export const checkoutStripe = async (planID: string) => {
     apiVersion: '2023-10-16',
   })
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await getServerSession(auth)
+  if (!session?.user.id) {
+    redirect('/login')
+  }
+
+  const stripeSession = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
       {
@@ -150,7 +155,7 @@ export const checkoutStripe = async (planID: string) => {
     cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
   })
 
-  if (session.url) {
-    redirect(session.url)
+  if (stripeSession.url) {
+    redirect(stripeSession.url)
   }
 }
