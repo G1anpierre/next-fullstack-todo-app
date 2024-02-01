@@ -95,29 +95,6 @@ const auth: NextAuthOptions = {
     },
   },
   events: {
-    async signIn({user, account, profile, isNewUser}) {
-      const foundUser = await prisma.user.findUnique({
-        where: {
-          name: user.name!,
-          email: user.email!,
-        },
-      })
-
-      if (!foundUser?.stripeCustomerId) {
-        const customer = await stripe.customers.create({
-          name: user.name!,
-          email: user.email!,
-        })
-        await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            stripeCustomerId: customer.id,
-          },
-        })
-      }
-    },
     createUser: async ({user}) => {
       const customer = await stripe.customers.create({
         name: user.name!,
