@@ -150,6 +150,7 @@ export const checkoutStripe = async (planID: string) => {
         quantity: 1,
       },
     ],
+    customer: session.user.stripeCustomerId,
     mode: 'payment',
     success_url: `${process.env.NEXTAUTH_URL}/success`,
     cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,

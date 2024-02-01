@@ -12,7 +12,7 @@ const resend = new Resend(process.env.MAIL_RESEND_API_KEY)
 export async function POST(request: Request) {
   try {
     const text = await request.text()
-    const signature = headers().get('stripe-signature')!
+    const signature = request.headers.get('stripe-signature')!
     const event = stripe.webhooks.constructEvent(
       text,
       signature,
