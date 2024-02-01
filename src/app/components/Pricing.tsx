@@ -62,8 +62,9 @@ export const Pricing = async () => {
   const pricingList = await getPricing()
 
   const pricing = pricingList.map((plan, index) => {
+    const localeTier = tiers[index] ?? []
     return {
-      ...tiers[index],
+      ...localeTier,
       ...plan,
     }
   })
@@ -126,7 +127,7 @@ export const Pricing = async () => {
                   role="list"
                   className="mt-8 space-y-3 text-sm leading-6 text-gray-600"
                 >
-                  {tier.features.map(feature => (
+                  {tier.features?.map(feature => (
                     <li key={feature} className="flex gap-x-3">
                       <CheckIcon
                         className="h-6 w-5 flex-none text-indigo-600"

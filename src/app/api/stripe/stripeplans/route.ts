@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 import {NextResponse} from 'next/server'
 
-// * api/stripe/stripe-plans
+// * api/stripe/stripeplans
 
 export const GET = async (request: Request) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -9,7 +9,7 @@ export const GET = async (request: Request) => {
   })
   const prices = await stripe.prices.list({
     active: true,
-    limit: 100,
+    limit: 3,
   })
   return NextResponse.json(prices)
 }
