@@ -2,6 +2,11 @@ import {getUser} from '@/app/lib/data'
 import {prisma} from '@/app/lib/database-prisma'
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt'
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+})
 
 export async function POST(req: Request) {
   // const body = await req.json()
@@ -23,11 +28,16 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+    const customer = await stripe.customers.create({
+      name,
+      email,
+    })
     const newUser = await prisma.user.create({
       data: {
         email,
         name,
         password: hashedPassword,
+        stripeCustomerId: customer.id,
       },
     })
 

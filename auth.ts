@@ -9,6 +9,10 @@ import bcrypt from 'bcrypt'
 import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import {prisma} from '@/app/lib/database-prisma'
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+})
+
 const auth: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   pages: {
@@ -67,44 +71,31 @@ const auth: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({token, account}) {
+    async jwt({token, user, account}) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.id = token.sub
+        token.stripeCustomerId = user?.stripeCustomerId
+        token.isActive = user?.isActive
       }
       return token
     },
     async session({session, token, user}) {
       // Send properties to the client, like an access_token and user id from a provider.
-      // session.user.id = token.id
+
       return {
         ...session,
         user: {
           ...session.user,
           id: token.id,
-          stripeCustomerId: user.stripeCustomerId,
-          isActive: user.isActive,
+          stripeCustomerId: token?.stripeCustomerId,
+          isActive: token?.isActive,
         },
       }
     },
   },
   events: {
-    // async signIn({user, account, profile, isNewUser}) {
-    //   if (isNewUser) {
-    //     await prisma.user.create({
-    //       data: {
-    //         id: user.id,
-    //         name: user.name,
-    //         email: user.email,
-    //         image: user.image,
-    //       },
-    //     })
-    //   }
-    // },
     createUser: async ({user}) => {
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2023-10-16',
-      })
       const customer = await stripe.customers.create({
         name: user.name!,
         email: user.email!,

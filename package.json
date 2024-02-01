@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/checkout"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -38,6 +39,7 @@
     "react-datepicker": "^4.23.0",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
+    "resend": "^3.1.0",
     "sonner": "^1.2.3",
     "stripe": "^14.14.0",
     "zod": "^3.22.4",
