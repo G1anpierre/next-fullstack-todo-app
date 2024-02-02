@@ -75,8 +75,8 @@ const auth: NextAuthOptions = {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.id = token.sub
-        token.stripeCustomerId = user?.stripeCustomerId
-        token.isActive = user?.isActive
+        token.stripeCustomerId = user.stripeCustomerId
+        token.isActive = user.isActive
       }
       return token
     },
@@ -88,8 +88,8 @@ const auth: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
-          stripeCustomerId: token?.stripeCustomerId,
-          isActive: token?.isActive,
+          stripeCustomerId: token.stripeCustomerId,
+          isActive: token.isActive,
         },
       }
     },
