@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
       const email = session.customer_details?.email
+      const name = session.customer_details?.name
 
       // * Update user's status to active
       await prisma.user.update({
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
         from: 'Acme <onboarding@resend.dev>',
         to: [`${email}`],
         subject: 'Successful Purchase',
-        react: EmailTemplate(),
+        react: EmailTemplate({name}),
       })
     }
     return new Response('ok', {status: 200})
