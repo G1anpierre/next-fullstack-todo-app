@@ -142,9 +142,10 @@ export const checkoutStripe = async (planID: string) => {
     redirect('/login')
   }
 
-  console.log('session user', session.user)
+  let stripeSession
   try {
-    const stripeSession = await stripe.checkout.sessions.create({
+    stripeSession = await stripe.checkout.sessions.create({
+      submit_type: 'pay',
       payment_method_types: ['card'],
       line_items: [
         {
@@ -157,10 +158,6 @@ export const checkoutStripe = async (planID: string) => {
       success_url: `${process.env.NEXTAUTH_URL}/success`,
       cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
     })
-
-    if (stripeSession.url) {
-      redirect(stripeSession.url)
-    }
   } catch (error) {
     if (error instanceof Error) {
       console.error('Stripe Error:', error.message)
@@ -170,5 +167,8 @@ export const checkoutStripe = async (planID: string) => {
         success: false,
       }
     }
+  }
+  if (stripeSession?.url) {
+    redirect(stripeSession.url)
   }
 }
