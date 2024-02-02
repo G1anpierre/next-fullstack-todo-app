@@ -142,10 +142,10 @@ export const checkoutStripe = async (planID: string) => {
     redirect('/login')
   }
 
-  console.log('session user', session.user)
   let stripeSession
   try {
     stripeSession = await stripe.checkout.sessions.create({
+      submit_type: 'pay',
       payment_method_types: ['card'],
       line_items: [
         {
