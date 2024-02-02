@@ -142,21 +142,33 @@ export const checkoutStripe = async (planID: string) => {
     redirect('/login')
   }
 
-  const stripeSession = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price: planID,
-        quantity: 1,
-      },
-    ],
-    customer: session.user.stripeCustomerId,
-    mode: 'payment',
-    success_url: `${process.env.NEXTAUTH_URL}/success`,
-    cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
-  })
+  console.log('session user', session.user)
+  try {
+    const stripeSession = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: planID,
+          quantity: 1,
+        },
+      ],
+      customer: session.user.stripeCustomerId,
+      mode: 'payment',
+      success_url: `${process.env.NEXTAUTH_URL}/success`,
+      cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
+    })
 
-  if (stripeSession.url) {
-    redirect(stripeSession.url)
+    if (stripeSession.url) {
+      redirect(stripeSession.url)
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Stripe Error:', error.message)
+      return {
+        errors: {error: error.message},
+        message: 'Failed to Checkout',
+        success: false,
+      }
+    }
   }
 }
