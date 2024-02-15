@@ -1,4 +1,5 @@
-import {SignUpSchemaType, StripePlanType} from './types'
+import {SignUpSchemaType} from './types'
+import z from 'zod'
 
 // * called from a client component
 export const updateDueDate = async (todoId: string, content: Date) => {
@@ -12,6 +13,7 @@ export const updateDueDate = async (todoId: string, content: Date) => {
   const data = await response.json()
   return data
 }
+
 
 // * called from a client component
 export const signUpUser = async (form: SignUpSchemaType) => {
@@ -30,6 +32,22 @@ export const signUpUser = async (form: SignUpSchemaType) => {
   return data
 }
 
+export const pricing = z.object({
+  id: z.string(),
+  product: z.string(),
+  description: z.string(),
+  features: z.array(z.object({
+    name: z.string(),
+  })),
+  unitAmount: z.number(),
+  interval: z.string().optional(),
+  currency: z.string(),
+  mostPopular: z.boolean(),
+});
+
+
+const pricingList = z.array(pricing);
+
 // * called from a server component
 export const getPricing = async () => {
   const response = await fetch(
@@ -39,5 +57,7 @@ export const getPricing = async () => {
   )
 
   const pricing = await response.json()
-  return pricing.data as StripePlanType[]
+
+  const validatePricing =  pricingList.parse(pricing)
+  return validatePricing
 }

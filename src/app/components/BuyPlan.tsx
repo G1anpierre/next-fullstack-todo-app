@@ -1,13 +1,13 @@
 'use client'
 import React from 'react'
-import {StripePlanType} from '../lib/types'
+import {Pricing, StripePlanType} from '../lib/types'
 import {classNamesFilter} from '../lib/utils'
 import {checkoutStripe} from '../lib/actions'
 
 export const BuyPlan = ({
   tier,
 }: {
-  tier: StripePlanType & {mostPopular: boolean}
+  tier: Pricing & {mostPopular: boolean}
 }) => {
   const checkoutStripeWithPlanID = checkoutStripe.bind(null, tier.id)
 

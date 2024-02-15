@@ -11,5 +11,24 @@ export const GET = async (request: Request) => {
     active: true,
     limit: 3,
   })
-  return NextResponse.json(prices)
+
+  const pricesData = prices.data
+
+
+  const pricing = await Promise.all(pricesData.map(async (price) => {
+    const product = await stripe.products.retrieve(price.product as string)
+
+    return {
+      id: price.id,
+      product: product.name,
+      description: product.description,
+      features: product.features,
+      unitAmount: price.unit_amount,
+      interval: price.recurring?.interval,
+      currency: price.currency,
+      mostPopular: product.metadata.mostPopular === 'true' ? true : false,
+    }
+  }))
+
+  return NextResponse.json(pricing)
 }

@@ -5,49 +5,6 @@ import {getPricing} from '../lib/api'
 import {classNamesFilter} from '../lib/utils'
 import {BuyPlan} from './BuyPlan'
 
-const tiers = [
-  {
-    name: 'Freelancer',
-    href: '#',
-    priceMonthly: '$24',
-    description: 'The essentials to provide your best work for clients.',
-    features: [
-      '5 products',
-      'Up to 1,000 subscribers',
-      'Basic analytics',
-      '48-hour support response time',
-    ],
-    mostPopular: false,
-  },
-  {
-    name: 'Startup',
-    href: '#',
-    priceMonthly: '$32',
-    description: 'A plan that scales with your rapidly growing business.',
-    features: [
-      '25 products',
-      'Up to 10,000 subscribers',
-      'Advanced analytics',
-      '24-hour support response time',
-      'Marketing automations',
-    ],
-    mostPopular: true,
-  },
-  {
-    name: 'Enterprise',
-    href: '#',
-    priceMonthly: '$48',
-    description: 'Dedicated support and infrastructure for your company.',
-    features: [
-      'Unlimited products',
-      'Unlimited subscribers',
-      'Advanced analytics',
-      '1-hour, dedicated support response time',
-      'Marketing automations',
-    ],
-    mostPopular: false,
-  },
-]
 
 // const getPricing = async () => {
 //   'use server'
@@ -61,13 +18,7 @@ const tiers = [
 export const Pricing = async () => {
   const pricingList = await getPricing()
 
-  const pricing = pricingList.map((plan, index) => {
-    const localeTier = tiers[index] ?? []
-    return {
-      ...localeTier,
-      ...plan,
-    }
-  })
+  const pricing = pricingList.map((plan) => plan);
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -91,7 +42,7 @@ export const Pricing = async () => {
               className={classNamesFilter(
                 tier.mostPopular ? 'lg:z-10 lg:rounded-b-none' : 'lg:mt-8',
                 tierIdx === 0 ? 'lg:rounded-r-none' : '',
-                tierIdx === tiers.length - 1 ? 'lg:rounded-l-none' : '',
+                tierIdx === pricing.length - 1 ? 'lg:rounded-l-none' : '',
                 'flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10',
               )}
             >
@@ -104,7 +55,7 @@ export const Pricing = async () => {
                       'text-lg font-semibold leading-8',
                     )}
                   >
-                    {tier.name}
+                    {tier.product}
                   </h3>
                   {tier.mostPopular ? (
                     <p className="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-600">
@@ -117,7 +68,9 @@ export const Pricing = async () => {
                 </p>
                 <p className="mt-6 flex items-baseline gap-x-1">
                   <span className="text-4xl font-bold tracking-tight text-gray-900">
-                    {tier.unit_amount / 100}
+                    {tier.unitAmount / 100}<span className='text-sm'>
+                      {tier.currency}
+                      </span>
                   </span>
                   <span className="text-sm font-semibold leading-6 text-gray-600">
                     /month
@@ -128,12 +81,12 @@ export const Pricing = async () => {
                   className="mt-8 space-y-3 text-sm leading-6 text-gray-600"
                 >
                   {tier.features?.map(feature => (
-                    <li key={feature} className="flex gap-x-3">
+                    <li key={feature?.name} className="flex gap-x-3">
                       <CheckIcon
                         className="h-6 w-5 flex-none text-indigo-600"
                         aria-hidden="true"
                       />
-                      {feature}
+                      {feature?.name}
                     </li>
                   ))}
                 </ul>

@@ -1,6 +1,7 @@
 import {SingleTodoSchema} from './data'
 import {z} from 'zod'
 import {DefaultUser} from 'next-auth'
+import { pricing } from './api'
 
 export type StatusesType = {
   [key: string]: string
@@ -69,6 +70,8 @@ export const SignInSchema = z.object({
 })
 
 export type SignInSchemaType = z.infer<typeof SignInSchema>
+
+export type Pricing = z.infer<typeof pricing>;
 
 export type StripePlanType = {
   id: string

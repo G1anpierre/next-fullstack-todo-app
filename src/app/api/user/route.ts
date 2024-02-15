@@ -28,10 +28,14 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+
+    // Create a new customer in Stripe after user is created
     const customer = await stripe.customers.create({
       name,
       email,
     })
+
+    // Create a new user in the database with the stripeCustomerId
     const newUser = await prisma.user.create({
       data: {
         email,
